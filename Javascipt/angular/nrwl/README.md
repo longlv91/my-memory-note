@@ -66,3 +66,7 @@ Most of these options are identical to the ones supported by the default CLI lib
 - `ng generate lib mylib --routing --lazy --parent-module=apps/myapp/src/app/app.module.ts` will configure the lib's NgModule to wire up routing and will configure app.module.ts to load the library.
 - `ng generate lib mylib --publishable` will generate a few extra files configuring for ng-packagr. You can then run ng build mylib to create an npm package you can publish to a npm registry. This is very rarely needed when developing in a monorepo. In this case the clients of the library are in the same repository, so no packaging and publishing step is required.
 - `ng generate lib mylib --tags=shared`,experimental will annotate the created lib with the two tags, which can be used for advanced code analysis. Read more below.
+
+## Source code demo
+
+[Bitbucket Repository](https://bitbucket.org/longlv91/nx-angular6/)
