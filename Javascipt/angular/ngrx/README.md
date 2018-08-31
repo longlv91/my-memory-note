@@ -1,4 +1,4 @@
-![alt nx](https://nrwl.io/assets/nx-logo.png)
+![alt ngrx](http://m0ru.github.io/rx-presentation/images/rx_logo.png)
 # @ngrx
 Reactive libraries for Angular
 
