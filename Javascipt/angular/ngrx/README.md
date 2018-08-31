@@ -13,3 +13,15 @@ Reactive libraries for Angular
   [powerful time-travelling debugger](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
 - [@ngrx/entity](./entity/README.md) - Entity State adapter for managing record collections.
 - [@ngrx/schematics](./schematics/README.md) - Scaffolding library for Angular applications using NgRx.
+
+## How to generate with Nx angular CLI
+
+```
+ng g @ngrx/schematics:store State --project=<projectname> --module app.module
+```
+
+List of component for ngrx:
+> @ngrx/schematics:store
+> @ngrx/schematics:entity
+> @ngrx/schematics:effects
+> @ngrx/schematics:feature
