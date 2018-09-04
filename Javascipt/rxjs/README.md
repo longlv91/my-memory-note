@@ -25,7 +25,7 @@ btnStream.subscribe(
     console.log("click");
   },
   error => {
-    conole.log(error);
+    console.log(error);
   },
   () => {
     console.log("Completed");
