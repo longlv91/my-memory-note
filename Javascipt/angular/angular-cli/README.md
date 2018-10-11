@@ -60,3 +60,27 @@ Scaffold  | Usage
 [Interface](https://github.com/angular/angular-cli/wiki/generate-interface) | `ng g interface my-new-interface`
 [Enum](https://github.com/angular/angular-cli/wiki/generate-enum)           | `ng g enum my-new-enum`
 [Module](https://github.com/angular/angular-cli/wiki/generate-module)       | `ng g module my-module`
+
+## Behind sence
+### What does the compiler do?
+
+Now that you know what Angular does we can talk about what the compiler does. I will avoid getting too technical mainly because I'm ignorant. However, in a dependency injection system you typically have to express your dependencies with some kind of metadata (e.g. how does a class say I can be injected, My lifetime is blah, or You can think of me as a Component type of instance). In Java, Spring originally did this with XML files. Java later adopted annotations and they have become the preferred way to express metadata. C# uses attributes to express metadata.
+
+Javascript does not have a great mechanism for exposing this metadata builtin. angular-js made an attempt and it wasn't bad but there were a lot of rules that couldn't be easily checked and were a little confusing. With Angular there are two supported ways of specifying the metadata. You can write pure Javascript and specify the metadata manually, somewhat similar to angular-js and just keep following the rules and writing extra boiler-platey code. Alternatively, you can switch to TypeScript which, as it just so happens, has decorators (those @ symbols) which are used to express metadata.
+
+So here is where we can finally get to the compiler. The compiler's job is to take that metadata and create the system of working pieces that is your application. You focus on all the pieces and all of the metadata and the compiler builds one big interconnected application.
+
+### How does the compiler do it?
+
+There are two ways the compiler can work, runtime and ahead-of-time. From here on I will assume you are using TypeScript:
+
+- *Runtime*: When the typescript compiler runs it takes all the decorator information and shoves it into the Javascript code attached to the decorated classes, methods, and fields. In your index.html you reference your main.js which calls the bootstrap method. That method is passed your top level module.
+The bootstrap method fires up the runtime compiler and gives it a reference to that top level module. The runtime compiler then starts to crawl that module, all services, components, etc. referenced by that module, and all of associated metadata, and builds up your application.
+
+- *AOT*: Rather than do all the work at runtime Angular has provided a mechanism for doing most the work at build time. This is almost always done using a webpack plugin (this must be one of the most popular yet least known npm packages). It runs after the typescript compilation has run so it sees essentially the same input as the runtime compiler. The AOT compiler builds up your application just like the runtime compiler but then saves it back out into Javascript.
+The advantage here is not just that you can save the CPU time required for the compilation itself, but it also allows you to reduce the size of your application.
+
+### Process build
+Angular CLI calls Webpack (Angular CLI's real service is configuring webpack. When you run ng build it isn't much more than a proxy to starting Webpack). Webpack first calls the Typescript compiler, then the angular compiler (assuming AOT), all while bundling your code at the same time.
+
+> Angular CLI => Webpack => TypeScript Compiler => TypeScript Compiler calls the Angular compiler in compile time.
